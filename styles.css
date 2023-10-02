@@ -59,7 +59,7 @@ body{
     color: rgba(255,255,255,0.5);
     font-weight: 500;
     pointer-events: none;
-    transition: 0.5;
+    transition: 0.3s;
 }
 
 .user_input input:focus~label,
@@ -72,14 +72,36 @@ body{
     height: 100%;
     background: transparent;
     border: none;
-    
+    outline: none;
+    font-size: 1em;
+    color: #fff;
+    font-weight: 500 ;
+    padding: 0 35px 0 5px;
 }
 
+.user_input .icon{
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 19px;
+    color: #fff;
+    line-height: 57px;
+}
 
+.formwrapper .remember_forgot{
+    font-size: 0.9em;
+    color: #fff;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 5px 20px;
+    align-items: center;
+}
 
 .btnLogin-popup{
-    width: 130px;
-    height: 50px;
+    width: 100%;
+    height: 45px;
     background: transparent;
     border: 2px solid #fff;
     outline: none;
@@ -88,5 +110,38 @@ body{
     font-size: 1.1em;
     color: #fff;
     font-weight: 500;
-    margin-left: 40px;
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+
+.btnLogin-popup:hover{
+    background: #fff;
+    color: #000;
+}
+
+.remember_forgot a{
+    color: rgba(255,142,81,1);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.remember_forgot a:hover{
+    text-decoration: underline;
+}
+
+.register{
+    font-size: 0.9em;
+    color: #fff;
+    font-weight: 500;
+    text-align: center;
+}
+
+.register a{
+    color: rgba(255,142,81,1);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.register a:hover{
+    text-decoration: underline;
 }
