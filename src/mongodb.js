@@ -1,10 +1,27 @@
-const mongoose = reqire("mongoose")
+const mongoose = require("mongoose")
+const url = "mongodb+srv://aryan:aryan@cluster0.c68jf98.mongodb.net/?retryWrites=true&w=majority"
 
-/*mongosh "mongodb+srv://cluster0.c68jf98.mongodb.net/" --apiVersion 1 --username aryan*/
-mongoose.connect("mongodb+srv://aryan:aryan@cluster0.c68jf98.mongodb.net/?retryWrites=true&w=majority")
-.then(() => {
-    console.log("Connected to MongoDB")
+const logInSchema = new mongoose.Schema({
+    email: {
+        type: String,
+        required: true,
+
+    },
+    password:{
+        type: String,
+        required: true,
+    },
 })
-.catch(() => {
-    console.log("Failed to connect")
-})
+
+const collection = mongoose.model("collection1", logInSchema)
+
+const connectToMongoDB = async () => {
+    try {
+        await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+        console.log('Connected to MongoDB');
+    } catch (error) {
+        console.error('Error connecting to MongoDB:', error);
+    }
+};
+
+module.exports = {collection, connectToMongoDB}
