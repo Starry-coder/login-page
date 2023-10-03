@@ -2,16 +2,20 @@ const express = require('express');
 const app = express();
 const path=require('path');
 const hbs=require('hbs');
-const templatePath=path.join(__dirname,"../templates");
+const templatePath=path.join(__dirname,"../public");
 const { connectToMongoDB, collection } = require('./mongodb');
 
 app.use(express.json());
-app.set('view engine', 'hbs');
+app.set('view engine', 'html');
 app.set('views', templatePath);
 app.use(express.urlencoded({extended:false}));
+app.set('view engine', 'html');
+app.engine('html', require('ejs').renderFile);
+app.use(express.static(path.join(__dirname, '../public')));
+
 
 app.get("/",(req,res) => {
-    res.render("login");
+    res.render("index");
 })
 
 app.post("/signup", async (req,res) => {
@@ -32,23 +36,26 @@ app.post("/signup", async (req,res) => {
 
 }),
 
-app.post("/login", async (req,res) => {
+app.post("/login", async (req, res) => {
     try {
         await connectToMongoDB(); // Connect to MongoDB
-        const check = await collection.findOne({email:req.body.email});
-        if(check.password==req.body.password){
-            res.render("home")
-        }
-        else{
-            res.send("Incorrect password")
+        const user = await collection.findOne({ email: req.body.email });
+
+        if (user) {
+            if (user.password === req.body.password) {
+                res.render("home");
+            } else {
+                res.send("Incorrect password");
+            }
+        } else {
+            res.send("User not found");  // Handle the case where the user is not found
         }
     } catch (error) {
-        console.log(error);
-        res.send("wrong details")
+        console.error(error);
+        res.send("An error occurred during login");
     }
+});
 
-
-}),
 
 app.listen(3000, () => console.log('Port connected'));
 
